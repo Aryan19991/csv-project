@@ -1,14 +1,3 @@
-"""
-****************************************************************************
-Additional info
- 1. I declare that my work contins no examples of misconduct, such as
- plagiarism, or collusion.
- 2. Any code taken from other sources is referenced within my code solution.
- 3. Student ID: w2083972
- 4. Date: 
-****************************************************************************
-
-"""
 
 # The required imports for this coursework-----------------------------------------------------------
 from graphics import *
