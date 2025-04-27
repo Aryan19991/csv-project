@@ -120,7 +120,8 @@ Scenario1-----------------------------------------------------------------------
             margin: 20px auto;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            display: none;
+            /* Changed from display: none to block */
+            display: block;
         }
 
         .profile-avatar {
@@ -216,10 +217,11 @@ Scenario1-----------------------------------------------------------------------
             </form>
         </div>
         
+        <!-- Profile card is now visible by default -->
         <div class="profile-card" id="profileCard">
-            <img id="profileAvatar" class="profile-avatar" src="" alt="Selected Avatar">
+            <img id="profileAvatar" class="profile-avatar" src="https://via.placeholder.com/150/9B5DE5/FFFFFF?text=1" alt="Selected Avatar">
             <h2 id="profileName">[Your Name]</h2>
-            <p>Age: <span id="profileAge">[Your Age]</span></p>
+            <p>Age: <span id="profileAge">Between 19-25</span></p>
         </div>
     </div>
     
@@ -245,6 +247,10 @@ Scenario1-----------------------------------------------------------------------
             const alertPopup = document.getElementById('alertPopup');
             const alertOkBtn = document.getElementById('alertOkBtn');
             
+            // Initialize with first avatar selected
+            avatars[0].classList.add('selected');
+            selectedAvatarInput.value = '1';
+            
             // Username validation
             usernameInput.addEventListener('input', function() {
                 const value = this.value;
@@ -255,18 +261,21 @@ Scenario1-----------------------------------------------------------------------
                 
                 if (value.length === 0) {
                     // Empty input, do nothing
+                    profileName.textContent = '[Your Name]';
                     return;
                 }
                 
                 if (value.length !== 7) {
                     usernameError.textContent = 'Username must be 7 characters long, starting with "w"';
                     usernameError.style.display = 'block';
+                    profileName.textContent = value;
                     return;
                 }
                 
                 if (!value.startsWith('w')) {
                     usernameError.textContent = 'Username must start with "w"';
                     usernameError.style.display = 'block';
+                    profileName.textContent = value;
                     return;
                 }
                 
@@ -309,40 +318,15 @@ Scenario1-----------------------------------------------------------------------
                     return;
                 }
                 
-                // Update profile card
-                profileName.textContent = username;
-                profileAge.textContent = age;
-                
-                // Show profile card
-                profileCard.style.display = 'block';
+                // Show success alert instead of just updating the profile card
+                // (since the profile card is already visible and updated in real-time)
+                alert('Profile submitted successfully!');
             });
             
             // Close alert popup
             alertOkBtn.addEventListener('click', function() {
                 alertPopup.style.display = 'none';
             });
-            
-            // Real-time updates for profile card as user interacts with form
-            usernameInput.addEventListener('input', updateProfileCard);
-            avatars.forEach(avatar => {
-                avatar.addEventListener('click', updateProfileCard);
-            });
-            
-            function updateProfileCard() {
-                const username = usernameInput.value;
-                const age = document.getElementById('age').value;
-                
-                if (username) {
-                    profileName.textContent = username;
-                } else {
-                    profileName.textContent = '[Your Name]';
-                }
-                
-                profileAge.textContent = age;
-                
-                // Even though profile card is not visible until submission,
-                // we keep it updated for when it becomes visible
-            }
         });
     </script>
 </body>
@@ -469,7 +453,8 @@ Scenario2-----------------------------------------------------------------------
             margin: 20px auto;
             text-align: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            display: none;
+            /* Changed from display: none to display: block to show profile initially */
+            display: block;
         }
 
         .profile-avatar {
@@ -565,8 +550,9 @@ Scenario2-----------------------------------------------------------------------
             </form>
         </div>
         
+        <!-- Profile card is now visible by default -->
         <div class="profile-card" id="profileCard">
-            <img id="profileAvatar" class="profile-avatar" src="" alt="Selected Avatar">
+            <img id="profileAvatar" class="profile-avatar" src="https://via.placeholder.com/150/9B5DE5/FFFFFF?text=1" alt="Selected Avatar">
             <h2 id="profileName">[Your Name]</h2>
             <p>Age: <span id="profileAge">[Your Age]</span></p>
         </div>
@@ -593,6 +579,9 @@ Scenario2-----------------------------------------------------------------------
             const profileAvatar = document.getElementById('profileAvatar');
             const alertPopup = document.getElementById('alertPopup');
             const alertOkBtn = document.getElementById('alertOkBtn');
+            
+            // Set default avatar
+            selectedAvatarInput.value = "1";
             
             // Username validation
             usernameInput.addEventListener('input', function() {
@@ -662,9 +651,6 @@ Scenario2-----------------------------------------------------------------------
                 // Update profile card
                 profileName.textContent = username;
                 profileAge.textContent = age;
-                
-                // Show profile card
-                profileCard.style.display = 'block';
             });
             
             // Close alert popup
@@ -689,9 +675,6 @@ Scenario2-----------------------------------------------------------------------
                 }
                 
                 profileAge.textContent = age;
-                
-                // Even though profile card is not visible until submission,
-                // we keep it updated for when it becomes visible
             }
         });
     </script>
@@ -821,7 +804,8 @@ Scenario3-----------------------------------------------------------------------
             text-align: center;
             box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
             border: 2px solid #f0e6e6;
-            display: none;
+            /* Changed from 'display: none' to 'display: block' to make it visible by default */
+            display: block;
         }
 
         .profile-avatar {
@@ -963,7 +947,7 @@ Scenario3-----------------------------------------------------------------------
         </div>
         
         <div class="profile-card" id="profileCard">
-            <img id="profileAvatar" class="profile-avatar" src="" alt="Selected Avatar">
+            <img id="profileAvatar" class="profile-avatar" src="https://via.placeholder.com/150/9B5DE5/FFFFFF?text=1" alt="Default Avatar">
             <h2 id="profileName">[Your UserName]</h2>
             <p>Age: <span id="profileAge">[Your Age]</span></p>
             <p>Study: <span id="profileStudy">[Your Study]</span></p>
@@ -997,6 +981,12 @@ Scenario3-----------------------------------------------------------------------
             
             // Initialize profile name with username value
             profileName.textContent = usernameInput.value;
+            
+            // Set default profile study level
+            profileStudy.textContent = studyLevelSelect.value;
+            
+            // Default avatar selection
+            selectedAvatarInput.value = "1"; // Default to first avatar
             
             // Age validation
             ageInput.addEventListener('input', function() {
@@ -1061,8 +1051,11 @@ Scenario3-----------------------------------------------------------------------
                     return;
                 }
                 
-                // Show profile card
-                profileCard.style.display = 'block';
+                // Profile card is already visible by default, so we don't need to show it
+                // Just update it with final values
+                profileName.textContent = usernameInput.value;
+                profileAge.textContent = age;
+                profileStudy.textContent = studyLevel;
             });
             
             // Close alert popup
@@ -1070,49 +1063,12 @@ Scenario3-----------------------------------------------------------------------
                 alertPopup.style.display = 'none';
             });
             
-            // Real-time updates for profile card as user interacts with form
-            ageInput.addEventListener('input', updateProfileCard);
-            studyLevelSelect.addEventListener('change', updateProfileCard);
-            avatars.forEach(avatar => {
-                avatar.addEventListener('click', updateProfileCard);
-            });
-            
-            function updateProfileCard() {
-                const age = ageInput.value;
-                const studyLevel = studyLevelSelect.value;
-                
-                if (age && !isNaN(parseInt(age, 10)) && parseInt(age, 10) >= 18 && parseInt(age, 10) <= 70) {
-                    profileAge.textContent = age;
-                } else {
-                    profileAge.textContent = '[Your Age]';
-                }
-                
-                profileStudy.textContent = studyLevel;
-                
-                // Even though profile card is not visible until submission,
-                // we keep it updated for when it becomes visible
-            }
-            
-            // Set defaults for the profile card
-            profileStudy.textContent = studyLevelSelect.value;
-            
-            // BONUS: Update profile card when age or study level change without clicking submit
-            ageInput.addEventListener('change', function() {
-                const ageValue = parseInt(this.value, 10);
-                if (!isNaN(ageValue) && ageValue >= 18 && ageValue <= 70) {
-                    profileCard.style.display = 'block';
-                }
-            });
-            
-            studyLevelSelect.addEventListener('change', function() {
-                if (ageInput.value && !isNaN(parseInt(ageInput.value, 10)) && parseInt(ageInput.value, 10) >= 18 && parseInt(ageInput.value, 10) <= 70 && selectedAvatarInput.value) {
-                    profileCard.style.display = 'block';
-                }
-            });
+            // Make the first avatar selected by default
+            avatars[0].classList.add('selected');
         });
     </script>
 </body>
-</html> 
+</html>
 
 Scenario4----------------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------------------------
@@ -1145,7 +1101,7 @@ Scenario4-----------------------------------------------------------------------
         }
 
         .profile-container {
-            background-color: #a8d1e7;
+            background-color: #a8d1e7; /* Light blue background */
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -1193,10 +1149,14 @@ Scenario4-----------------------------------------------------------------------
         }
 
         .eligibility-feedback {
-            color: #4caf50;
+            color: #4caf50; /* Green for eligible */
             font-size: 12px;
             margin-top: 5px;
-            display: none;
+            display: block;
+        }
+
+        .ineligible {
+            color: #ff0000; /* Red for ineligible */
         }
 
         .membership-options {
@@ -1243,6 +1203,8 @@ Scenario4-----------------------------------------------------------------------
             text-align: center;
             margin-top: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Display initially */
+            display: block;
         }
 
         .profile-card h2 {
@@ -1318,6 +1280,59 @@ Scenario4-----------------------------------------------------------------------
             background-size: 10px 10px;
             background-position: 0 0, 5px 5px;
         }
+
+        /* Modal/Popup styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #f2f2f2;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 400px;
+            position: relative;
+            text-align: center;
+        }
+
+        .modal-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .modal-text {
+            margin-bottom: 20px;
+        }
+
+        .ok-btn {
+            background-color: #8B4513; /* Brown button color to match image */
+            color: white;
+            border: none;
+            padding: 8px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .ok-btn:hover {
+            background-color: #A0522D;
+        }
+
+        /* Section dividers */
+        .section-divider {
+            border-top: 1px solid #8bb5c9;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
@@ -1332,8 +1347,8 @@ Scenario4-----------------------------------------------------------------------
                 <p><strong>The course you study</strong></p>
             </div>
             
-            <!-- Form Section -->
-            <div class="form-section">
+            <!-- User Details Section - This will be the one with pattern applied -->
+            <div class="form-section" id="userDetailsSection">
                 <h2>User Details</h2>
                 <form id="profileForm">
                     <div class="form-group">
@@ -1343,14 +1358,14 @@ Scenario4-----------------------------------------------------------------------
                     
                     <div class="form-group">
                         <label for="age">Age:</label>
-                        <input type="number" id="age" placeholder="Enter an age above 18">
-                        <p class="eligibility-feedback" id="ageEligibility">You are eligible for discount</p>
+                        <input type="number" id="age" placeholder="Enter an age above 18" value="21">
+                        <p class="eligibility-feedback" id="ageEligibility">✓ You are eligible for discount</p>
                     </div>
                     
                     <div class="form-group">
                         <label for="studyStatus">Study status:</label>
                         <select id="studyStatus">
-                            <option value="FT UG student">FT UG student</option>
+                            <option value="FT UG student" selected>FT UG student</option>
                             <option value="PT UG student">PT UG student</option>
                             <option value="PG student">PG student</option>
                         </select>
@@ -1359,8 +1374,8 @@ Scenario4-----------------------------------------------------------------------
                     <div class="form-group">
                         <label for="subscription">Subscription:</label>
                         <select id="subscription">
-                            <option value="Standard £9.99 per/month">Standard £9.99 per/month</option>
-                            <option value="Premium £14.99 per/month">Premium £14.99 per/month</option>
+                            <option value="Standard £9.99 per/month" selected>Standard £9.99 per/month</option>
+                            <option value="Premium £19.99 per/month">Premium £19.99 per/month</option>
                             <option value="Basic £4.99 per/month">Basic £4.99 per/month</option>
                         </select>
                     </div>
@@ -1385,8 +1400,8 @@ Scenario4-----------------------------------------------------------------------
                 </form>
             </div>
             
-            <!-- Profile Card (Hidden initially) -->
-            <div class="profile-card" id="profileCard" style="display: none;">
+            <!-- Profile Card (Visible initially with real user data) -->
+            <div class="profile-card" id="profileCard">
                 <h2>Your Profile</h2>
                 <div class="profile-image">
                     <img src="https://picsum.photos/200" alt="Profile Image" id="profileImage">
@@ -1395,6 +1410,8 @@ Scenario4-----------------------------------------------------------------------
                 <p>Study: <span id="cardStudy">FT UG student</span></p>
                 <p>Subscription: <span id="cardSubscription">Standard £9.99 per/month</span></p>
             </div>
+            
+            <div class="section-divider"></div>
             
             <!-- Customization Section -->
             <div class="customization-section">
@@ -1406,6 +1423,15 @@ Scenario4-----------------------------------------------------------------------
                     <div class="pattern-option" data-pattern="grid"></div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Subscription Change Popup Modal -->
+    <div class="modal" id="subscriptionModal">
+        <div class="modal-content">
+            <div class="modal-title">This page says</div>
+            <div class="modal-text">Your subscription choice changed, press submit profile to re-calculate your discount.</div>
+            <button class="ok-btn" id="okButton">OK</button>
         </div>
     </div>
 
@@ -1422,17 +1448,43 @@ Scenario4-----------------------------------------------------------------------
             const studyStatus = document.getElementById('studyStatus');
             const subscription = document.getElementById('subscription');
             const annualMembership = document.getElementById('annualMembership');
-            const profileContainer = document.getElementById('profileContainer');
+            const userDetailsSection = document.getElementById('userDetailsSection');
             const patternOptions = document.querySelectorAll('.pattern-option');
+            const subscriptionModal = document.getElementById('subscriptionModal');
+            const okButton = document.getElementById('okButton');
             
-            // Check age eligibility for discount
-            ageInput.addEventListener('input', function() {
-                const age = parseInt(this.value);
+            // Track last subscription value to detect changes
+            let lastSubscription = subscription.value;
+            
+            // Check age eligibility for discount (run immediately on page load)
+            function checkAgeEligibility() {
+                const age = parseInt(ageInput.value);
                 if (age >= 18) {
-                    ageEligibility.style.display = 'block';
+                    ageEligibility.textContent = "✓ You are eligible for discount";
+                    ageEligibility.classList.remove('ineligible');
                 } else {
-                    ageEligibility.style.display = 'none';
+                    ageEligibility.textContent = "✗ You are not eligible for discount";
+                    ageEligibility.classList.add('ineligible');
                 }
+            }
+            
+            // Run immediately to show initial status
+            checkAgeEligibility();
+            
+            // Update when age changes
+            ageInput.addEventListener('input', checkAgeEligibility);
+            
+            // Show popup when subscription changes
+            subscription.addEventListener('change', function() {
+                if (this.value !== lastSubscription) {
+                    subscriptionModal.style.display = 'flex';
+                    lastSubscription = this.value;
+                }
+            });
+            
+            // Close modal when OK button is clicked
+            okButton.addEventListener('click', function() {
+                subscriptionModal.style.display = 'none';
             });
             
             // Handle form submission
@@ -1440,35 +1492,39 @@ Scenario4-----------------------------------------------------------------------
                 e.preventDefault();
                 
                 // Update the profile card with form values
+                cardName.textContent = document.getElementById('userName').value;
                 cardStudy.textContent = studyStatus.value;
                 
-                // Calculate discount if annual membership is selected
+                // Format subscription text for the profile card
                 let subscriptionText = subscription.value;
-                if (annualMembership.checked) {
-                    // Extract the price from the subscription string
-                    const priceMatch = subscriptionText.match(/£(\d+\.\d+)/);
-                    if (priceMatch && priceMatch[1]) {
-                        const originalPrice = parseFloat(priceMatch[1]);
-                        const discountedPrice = (originalPrice * 0.8).toFixed(2); // 20% discount
-                        
-                        // Replace the original price with the discounted price
-                        subscriptionText = subscriptionText.replace(
-                            `£${originalPrice}`, 
-                            `£${discountedPrice} (after 20% discount)`
-                        );
+                
+                // Extract just the plan type and price
+                const planMatch = subscriptionText.match(/(Standard|Premium|Basic) £(\d+\.\d+)/);
+                if (planMatch) {
+                    const planType = planMatch[1];
+                    const price = planMatch[2];
+                    
+                    // Apply discount if annual membership is selected
+                    if (annualMembership.checked) {
+                        const discountedPrice = (parseFloat(price) * 0.8).toFixed(2); // 20% discount
+                        subscriptionText = `${planType} £${discountedPrice} per/month (after 20% discount)`;
+                    } else {
+                        subscriptionText = `${planType} £${price} per/month`;
                     }
                 }
                 
                 cardSubscription.textContent = subscriptionText;
-                
-                // Show the profile card
-                profileCard.style.display = 'block';
                 
                 // Scroll to see the profile card
                 setTimeout(() => {
                     profileCard.scrollIntoView({ behavior: 'smooth' });
                 }, 300);
             });
+            
+            // Initialize profile with form values
+            cardName.textContent = document.getElementById('userName').value;
+            cardStudy.textContent = studyStatus.value;
+            cardSubscription.textContent = subscription.value;
             
             // Handle pattern selection
             patternOptions.forEach(option => {
@@ -1479,27 +1535,27 @@ Scenario4-----------------------------------------------------------------------
                     // Add selected class to the clicked option
                     this.classList.add('selected');
                     
-                    // Apply pattern to the profile container
+                    // Apply pattern ONLY to the user details section
                     const pattern = this.getAttribute('data-pattern');
                     applyPattern(pattern);
                 });
             });
             
-            // Function to apply background pattern
+            // Function to apply background pattern to user details section only
             function applyPattern(pattern) {
                 // Reset all patterns
-                profileContainer.style.backgroundImage = 'none';
-                profileContainer.style.backgroundColor = '#a8d1e7';
+                userDetailsSection.style.backgroundImage = 'none';
+                userDetailsSection.style.backgroundColor = '#fff';
                 
                 // Apply selected pattern
                 switch(pattern) {
                     case 'dots':
-                        profileContainer.style.backgroundImage = 'radial-gradient(#8bb5c9 2px, transparent 2px)';
-                        profileContainer.style.backgroundSize = '20px 20px';
+                        userDetailsSection.style.backgroundImage = 'radial-gradient(#ddd 2px, transparent 2px)';
+                        userDetailsSection.style.backgroundSize = '20px 20px';
                         break;
                     case 'grid':
-                        profileContainer.style.backgroundImage = 'linear-gradient(#8bb5c9 1px, transparent 1px), linear-gradient(90deg, #8bb5c9 1px, transparent 1px)';
-                        profileContainer.style.backgroundSize = '20px 20px';
+                        userDetailsSection.style.backgroundImage = 'linear-gradient(#ddd 1px, transparent 1px), linear-gradient(90deg, #ddd 1px, transparent 1px)';
+                        userDetailsSection.style.backgroundSize = '20px 20px';
                         break;
                     default:
                         // Solid pattern (default)
