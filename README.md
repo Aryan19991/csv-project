@@ -1,268 +1,2945 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-package com.mycompany.cosc005w_mock_planeapp;
-
-import java.util.Scanner;
-import java.io.File;
-import java.io.FileWriter;
-import java.util.InputMismatchException;
-/**
- * // Before you start, complete the following information: 
- * NAME: Aryan 
- * SURNAME: Paudel
- * STUDENT ID: SESSION (Day + time): w2083972(11 to 12:30)
- */
-public class App {
-
-      // Global variables
-    private static int[][] planeSeats = null; // 2D array for seat availability
-    private static int[] pricePerRow = null; // Array for seat prices per row
-    private static Payment[] payments = new Payment[260]; // Array to store payment records
-    private static int payCount = 0; // Counter for payments
-
-    public static void main(String[] args) {
-        System.out.println("Welcome to Flying Java!");
-        initialiseRows(); // Task 1: Initialize seating arrangement
-        runMenu(); // Start the menu
-    }
-
-    // Task 1: Initialize the number of seats per row
-    public static void initialiseRows() {
-        planeSeats = new int[4][]; // 4 rows
-        planeSeats[0] = new int[16]; // Row 1: 16 seats
-        planeSeats[1] = new int[22]; // Row 2: 22 seats
-        planeSeats[2] = new int[22]; // Row 3: 22 seats
-        planeSeats[3] = new int[16]; // Row 4: 16 seats
-        pricePerRow = new int[4]; // Prices for each row
-        pricePerRow[0] = 50; // Price for Row 1
-        pricePerRow[1] = 80; // Price for Row 2
-        pricePerRow[2] = 80; // Price for Row 3
-        pricePerRow[3] = 50; // Price for Row 4
-    }
-
-    // Run the main menu
-    public static void runMenu() {
-        int option;
-        boolean cont = true;
-
-        while (cont) {
-            option = getOption(); // Get user option
-            switch (option) {
-                case 0:
-                    cont = false; // Exit the loop
-                    break;
-                case 1:
-                    buyTicket(); // Task 4: Buy a ticket
-                    break;
-                case 2:
-                    showSeatingArea(); // Show seating map
-                    break;
-                case 3:
-                    searchPayments(); // Task 5: Search for payments
-                    break;
-                case 4:
-                    saveToFile(); // Task 6: Save payments to file
-                    break;
-                default:
-                    System.out.println("Option not available. Please select a valid option: ");
-            }
+Scenario1--------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
         }
-    }
 
-    // Get user option from the menu
-    private static int getOption() {
-        Scanner input = new Scanner(System.in);
-        boolean valid = false;
-        int option = -1;
-        do {
-            System.out.println();
-            System.out.println("+---------------------------------------------+");
-            System.out.println("|                MAIN MENU                    |");
-            System.out.println("+---------------------------------------------+");
-            System.out.println("|  1) Buy a plane ticket                      |");
-            System.out.println("|  2) Show seating area and available seats   |");
-            System.out.println("|  3) Search for payments                     |");
-            System.out.println("|  4) Save payments to file                   |");
-            System.out.println("|  0) Quit                                    |");
-            System.out.println("+---------------------------------------------+");
-            System.out.print("Please select an option: ");
-            try {
-                option = input.nextInt();
-                valid = true;
-            } catch (Exception e) {
-                System.out.println("This option is not valid.");
-                input.next(); // Clear invalid input
-            }
-        } while (!valid);
-        return option;
-    }
+        .main-container {
+            background-color: #f0e6e6;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
 
-    // Task 4: Buy a ticket
-    private static void buyTicket() {
-        Scanner input = new Scanner(System.in);
-        String email = "";
-        int row = 0, seat = 0;
-        boolean email_check = false;
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
 
-        // Validate email input
-        do {
-            System.out.print("Enter your email: ");
-            email = input.nextLine();
-            if (email.contains(".") && email.contains("@")) {
-                email_check = true;
-            } else {
-                System.out.println("Invalid email");
-            }
-        } while (!email_check);
+        .student-info {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
 
-        // Validate row input
-        do {
-            try {
-                System.out.print("Enter row number (1-4): ");
-                row = input.nextInt() - 1; // Adjust for 0 -based index
-                if (row < 0 || row > 3) {
-                    System.out.println("Row number must be between 1 and 4!");
+        .student-details {
+            margin-bottom: 10px;
+        }
+
+        .form-section {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .avatar-selection {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .avatar.selected {
+            width: 80px;
+            height: 80px;
+            border: 3px solid #4CAF50;
+        }
+
+        .form-note {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            font-size: 16px;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        .profile-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            width: 80%;
+            max-width: 400px;
+            margin: 20px auto;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+        }
+
+        .error-message {
+            color: #ff0000;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            color: #4CAF50;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .alert-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+        }
+
+        .alert-content {
+            text-align: center;
+        }
+
+        .alert-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1>Create Your Profile</h1>
+        
+        <div class="student-info">
+            <div class="student-details">
+                <strong>Student Full Name</strong>
+                <div>Student ID - w123456</div>
+                <div>The course you study</div>
+            </div>
+            <h3>User Details</h3>
+        </div>
+        
+        <div class="form-section">
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="username">Enter Your User Name:</label>
+                    <input type="text" id="username" name="username">
+                    <div id="usernameError" class="error-message"></div>
+                    <div id="usernameSuccess" class="success-message">✓ Valid Username</div>
+                    <div class="form-note">A valid username should contain 7 characters, starting with "w"</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="age">Enter Your Age:</label>
+                    <input type="text" id="age" name="age" value="Between 19-25" readonly>
+                    <div class="form-note">Do not change the user age</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Select an Avatar:</label>
+                    <div class="avatar-selection">
+                        <img src="https://via.placeholder.com/150/9B5DE5/FFFFFF?text=1" class="avatar" data-avatar="1" alt="Avatar 1">
+                        <img src="https://via.placeholder.com/150/F15BB5/FFFFFF?text=2" class="avatar" data-avatar="2" alt="Avatar 2">
+                        <img src="https://via.placeholder.com/150/FEE440/000000?text=3" class="avatar" data-avatar="3" alt="Avatar 3">
+                    </div>
+                    <input type="hidden" id="selectedAvatar" name="selectedAvatar">
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitProfile">Submit Profile</button>
+            </form>
+        </div>
+        
+        <div class="profile-card" id="profileCard">
+            <img id="profileAvatar" class="profile-avatar" src="" alt="Selected Avatar">
+            <h2 id="profileName">[Your Name]</h2>
+            <p>Age: <span id="profileAge">[Your Age]</span></p>
+        </div>
+    </div>
+    
+    <div class="alert-popup" id="alertPopup">
+        <div class="alert-content">
+            <p>Please fill all required fields before submitting.</p>
+            <button class="alert-btn" id="alertOkBtn">OK</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const usernameInput = document.getElementById('username');
+            const usernameError = document.getElementById('usernameError');
+            const usernameSuccess = document.getElementById('usernameSuccess');
+            const avatars = document.querySelectorAll('.avatar');
+            const selectedAvatarInput = document.getElementById('selectedAvatar');
+            const profileForm = document.getElementById('profileForm');
+            const profileCard = document.getElementById('profileCard');
+            const profileName = document.getElementById('profileName');
+            const profileAge = document.getElementById('profileAge');
+            const profileAvatar = document.getElementById('profileAvatar');
+            const alertPopup = document.getElementById('alertPopup');
+            const alertOkBtn = document.getElementById('alertOkBtn');
+            
+            // Username validation
+            usernameInput.addEventListener('input', function() {
+                const value = this.value;
+                
+                // Clear previous messages
+                usernameError.style.display = 'none';
+                usernameSuccess.style.display = 'none';
+                
+                if (value.length === 0) {
+                    // Empty input, do nothing
+                    return;
+                }
+                
+                if (value.length !== 7) {
+                    usernameError.textContent = 'Username must be 7 characters long, starting with "w"';
+                    usernameError.style.display = 'block';
+                    return;
+                }
+                
+                if (!value.startsWith('w')) {
+                    usernameError.textContent = 'Username must start with "w"';
+                    usernameError.style.display = 'block';
+                    return;
+                }
+                
+                // Valid username
+                usernameSuccess.style.display = 'block';
+                
+                // Update profile card in real-time
+                profileName.textContent = value;
+            });
+            
+            // Avatar selection
+            avatars.forEach(avatar => {
+                avatar.addEventListener('click', function() {
+                    // Remove selected class from all avatars
+                    avatars.forEach(a => a.classList.remove('selected'));
+                    
+                    // Add selected class to clicked avatar
+                    this.classList.add('selected');
+                    
+                    // Store selected avatar value
+                    const avatarValue = this.getAttribute('data-avatar');
+                    selectedAvatarInput.value = avatarValue;
+                    
+                    // Update profile card in real-time
+                    profileAvatar.src = this.src;
+                });
+            });
+            
+            // Form submission
+            profileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = usernameInput.value;
+                const age = document.getElementById('age').value;
+                const avatar = selectedAvatarInput.value;
+                
+                // Validate form
+                if (!username || !username.startsWith('w') || username.length !== 7 || !avatar) {
+                    alertPopup.style.display = 'block';
+                    return;
+                }
+                
+                // Update profile card
+                profileName.textContent = username;
+                profileAge.textContent = age;
+                
+                // Show profile card
+                profileCard.style.display = 'block';
+            });
+            
+            // Close alert popup
+            alertOkBtn.addEventListener('click', function() {
+                alertPopup.style.display = 'none';
+            });
+            
+            // Real-time updates for profile card as user interacts with form
+            usernameInput.addEventListener('input', updateProfileCard);
+            avatars.forEach(avatar => {
+                avatar.addEventListener('click', updateProfileCard);
+            });
+            
+            function updateProfileCard() {
+                const username = usernameInput.value;
+                const age = document.getElementById('age').value;
+                
+                if (username) {
+                    profileName.textContent = username;
                 } else {
-                    System.out.println("Row number " + (row + 1) + " is valid.");
+                    profileName.textContent = '[Your Name]';
                 }
-            } catch (InputMismatchException e) {
-                System.out.println("Row number should be a valid integer.");
-                input.next(); // Clear invalid input
+                
+                profileAge.textContent = age;
+                
+                // Even though profile card is not visible until submission,
+                // we keep it updated for when it becomes visible
             }
-        } while (row < 0 || row > 3);
+        });
+    </script>
+</body>
+</html>
 
-        // Validate seat input
-        boolean seat_check = false;
-        do {
-            try {
-                System.out.print("Enter seat number (1-" + planeSeats[row].length + "): ");
-                seat = input.nextInt() - 1; // Adjust for 0-based index
-                if (seat < 0 || seat >= planeSeats[row].length) {
-                    System.out.println("Seat number must be between 1 and " + planeSeats[row].length + "!");
+Scenario2-----------------------------------------------------------------------------
+--------------------------------------------------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .main-container {
+            background-color: #f0e6e6;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .student-info {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .student-details {
+            margin-bottom: 10px;
+        }
+
+        .form-section {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .avatar-selection {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .avatar.selected {
+            width: 80px;
+            height: 80px;
+            border: 3px solid #4CAF50;
+        }
+
+        .form-note {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            font-size: 16px;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        .profile-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            width: 80%;
+            max-width: 400px;
+            margin: 20px auto;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+        }
+
+        .error-message {
+            color: #ff0000;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            color: #4CAF50;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .alert-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+        }
+
+        .alert-content {
+            text-align: center;
+        }
+
+        .alert-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1>Create Your Profile</h1>
+        
+        <div class="student-info">
+            <div class="student-details">
+                <strong>Student Full Name</strong>
+                <div>Student ID - w123456</div>
+                <div>The course you study</div>
+            </div>
+            <h3>User Details</h3>
+        </div>
+        
+        <div class="form-section">
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="username">Enter Your User Name:</label>
+                    <input type="text" id="username" name="username" placeholder="7 characters no numbers">
+                    <div id="usernameError" class="error-message"></div>
+                    <div id="usernameSuccess" class="success-message">✓ Valid Username</div>
+                    <div class="form-note">A valid username should contain 7 characters, no numbers</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="age">Enter Your Age:</label>
+                    <input type="text" id="age" name="age" value="Between 19-25" readonly>
+                    <div class="form-note">Do not change the user age</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Select an Avatar:</label>
+                    <div class="avatar-selection">
+                        <img src="https://via.placeholder.com/150/9B5DE5/FFFFFF?text=1" class="avatar" data-avatar="1" alt="Avatar 1">
+                        <img src="https://via.placeholder.com/150/F15BB5/FFFFFF?text=2" class="avatar" data-avatar="2" alt="Avatar 2">
+                        <img src="https://via.placeholder.com/150/FEE440/000000?text=3" class="avatar" data-avatar="3" alt="Avatar 3">
+                    </div>
+                    <input type="hidden" id="selectedAvatar" name="selectedAvatar">
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitProfile">Submit Profile</button>
+            </form>
+        </div>
+        
+        <div class="profile-card" id="profileCard">
+            <img id="profileAvatar" class="profile-avatar" src="" alt="Selected Avatar">
+            <h2 id="profileName">[Your Name]</h2>
+            <p>Age: <span id="profileAge">[Your Age]</span></p>
+        </div>
+    </div>
+    
+    <div class="alert-popup" id="alertPopup">
+        <div class="alert-content">
+            <p>Please fill all required fields before submitting.</p>
+            <button class="alert-btn" id="alertOkBtn">OK</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const usernameInput = document.getElementById('username');
+            const usernameError = document.getElementById('usernameError');
+            const usernameSuccess = document.getElementById('usernameSuccess');
+            const avatars = document.querySelectorAll('.avatar');
+            const selectedAvatarInput = document.getElementById('selectedAvatar');
+            const profileForm = document.getElementById('profileForm');
+            const profileCard = document.getElementById('profileCard');
+            const profileName = document.getElementById('profileName');
+            const profileAge = document.getElementById('profileAge');
+            const profileAvatar = document.getElementById('profileAvatar');
+            const alertPopup = document.getElementById('alertPopup');
+            const alertOkBtn = document.getElementById('alertOkBtn');
+            
+            // Username validation
+            usernameInput.addEventListener('input', function() {
+                const value = this.value;
+                
+                // Clear previous messages
+                usernameError.style.display = 'none';
+                usernameSuccess.style.display = 'none';
+                
+                if (value.length === 0) {
+                    // Empty input, do nothing
+                    return;
                 }
-            } catch (InputMismatchException e) {
-                System.out.println("Seat number should be a valid integer.");
-                input.next(); // Clear invalid input
-            }
-        } while (seat < 0 || seat >= planeSeats[row].length);
-
-        // Check if the seat is available
-        if (planeSeats[row][seat] == 0) {
-            planeSeats[row][seat] = 1; // Mark seat as taken
-            Payment payment = new Payment(email, pricePerRow[row]); // Create payment object
-            if (payCount < payments.length) {
-                payments[payCount] = payment; // Store payment
-                payCount++;
-                System.out.println("Purchase successful.");
-                showSeatingArea(); // Show updated seating area
-            } else {
-                System.out.println("Sorry, the payment record limit has been reached.");
-            }
-        } else {
-            System.out.println("This seat is already taken.");
-        }
-    }
-
-    // Task 2: Show seating area
-    private static void showSeatingArea() {
-        int rows = planeSeats.length;
-        char aisle = '|';
-
-        System.out.println("=".repeat(76));
-        System.out.println("                              PLANE SEATING MAP ");
-        System.out.println("=".repeat(76));
-
-        for (int row = 0; row < rows; row++) {
-            System.out.print("Row " + (row + 1) + " (£" + pricePerRow[row] + ")  ");
-            int seatsPerRow = planeSeats[row].length;
-            for (int seat = 0; seat < seatsPerRow; seat++) {
-                if (seat == 9) { // Create aisles
-                    System.out.print(" " + aisle + " ");
+                
+                if (value.length !== 7) {
+                    usernameError.textContent = 'You have not entered a seven character string';
+                    usernameError.style.display = 'block';
+                    return;
                 }
-                if (planeSeats[row][seat] == 0) { // Available seat
-                    System.out.print("[O]");
-                } else { // Not available seat
-                    System.out.print("[X]");
+                
+                // Check if username contains numbers
+                if (/\d/.test(value)) {
+                    usernameError.textContent = 'Username must contain only letters';
+                    usernameError.style.display = 'block';
+                    return;
+                }
+                
+                // Valid username
+                usernameSuccess.style.display = 'block';
+                
+                // Update profile card in real-time
+                profileName.textContent = value;
+            });
+            
+            // Avatar selection
+            avatars.forEach(avatar => {
+                avatar.addEventListener('click', function() {
+                    // Remove selected class from all avatars
+                    avatars.forEach(a => a.classList.remove('selected'));
+                    
+                    // Add selected class to clicked avatar
+                    this.classList.add('selected');
+                    
+                    // Store selected avatar value
+                    const avatarValue = this.getAttribute('data-avatar');
+                    selectedAvatarInput.value = avatarValue;
+                    
+                    // Update profile card in real-time
+                    profileAvatar.src = this.src;
+                });
+            });
+            
+            // Form submission
+            profileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = usernameInput.value;
+                const age = document.getElementById('age').value;
+                const avatar = selectedAvatarInput.value;
+                
+                // Validate form
+                if (!username || username.length !== 7 || /\d/.test(username) || !avatar) {
+                    alertPopup.style.display = 'block';
+                    return;
+                }
+                
+                // Update profile card
+                profileName.textContent = username;
+                profileAge.textContent = age;
+                
+                // Show profile card
+                profileCard.style.display = 'block';
+            });
+            
+            // Close alert popup
+            alertOkBtn.addEventListener('click', function() {
+                alertPopup.style.display = 'none';
+            });
+            
+            // Real-time updates for profile card as user interacts with form
+            usernameInput.addEventListener('input', updateProfileCard);
+            avatars.forEach(avatar => {
+                avatar.addEventListener('click', updateProfileCard);
+            });
+            
+            function updateProfileCard() {
+                const username = usernameInput.value;
+                const age = document.getElementById('age').value;
+                
+                if (username) {
+                    profileName.textContent = username;
+                } else {
+                    profileName.textContent = '[Your Name]';
+                }
+                
+                profileAge.textContent = age;
+                
+                // Even though profile card is not visible until submission,
+                // we keep it updated for when it becomes visible
+            }
+        });
+    </script>
+</body>
+</html>
+
+Scenario3-----------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .main-container {
+            background-color: #f0e6e6;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .student-info {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .student-details {
+            margin-bottom: 10px;
+        }
+
+        .form-section {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .avatar-selection {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .avatar.selected {
+            width: 80px;
+            height: 80px;
+            border: 3px solid #4CAF50;
+        }
+
+        .form-note {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 20px auto;
+            font-size: 16px;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        .profile-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            width: 80%;
+            max-width: 400px;
+            margin: 20px auto;
+            text-align: center;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #f0e6e6;
+            display: none;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+        }
+
+        .error-message {
+            color: #ff0000;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            color: #4CAF50;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .alert-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none;
+        }
+
+        .alert-content {
+            text-align: center;
+        }
+
+        .alert-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        /* Study level dropdown styles */
+        .study-level-dropdown {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            width: 100%;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 4px;
+            margin-top: 2px;
+        }
+
+        .dropdown-item {
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            color: black;
+            cursor: pointer;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown-item.selected {
+            background-color: #e7f3ff;
+            color: #0066cc;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1>Create Your Profile</h1>
+        
+        <div class="student-info">
+            <div class="student-details">
+                <strong>Student Full Name</strong>
+                <div>Student ID - w123456</div>
+                <div>The course you study</div>
+            </div>
+            <h3>User Details</h3>
+        </div>
+        
+        <div class="form-section">
+            <form id="profileForm">
+                <div class="form-group">
+                    <label for="username">Your UserName is:</label>
+                    <input type="text" id="username" name="username" value="w123456" readonly>
+                    <div class="form-note">No need to change the User Name</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="age">Enter Your Age:</label>
+                    <input type="number" id="age" name="age" min="18" placeholder="Min value 18">
+                    <div id="ageError" class="error-message">Age must be between 18 and 70!</div>
+                    <div id="ageSuccess" class="success-message">✓ Valid Age</div>
+                    <div class="form-note">The minimum expected age is 18, else print feedback as below</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="studyLevel">Select the level of your studies:</label>
+                    <select id="studyLevel" name="studyLevel">
+                        <option value="Foundation">Foundation</option>
+                        <option value="Undergraduate" selected>Undergraduate</option>
+                        <option value="Postgraduate">Postgraduate</option>
+                    </select>
+                    <div class="form-note">Users can select their level of study. Undergraduate is pre-selected.</div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Select an Avatar:</label>
+                    <div class="avatar-selection">
+                        <img src="https://via.placeholder.com/150/9B5DE5/FFFFFF?text=1" class="avatar" data-avatar="1" alt="Avatar 1">
+                        <img src="https://via.placeholder.com/150/F15BB5/FFFFFF?text=2" class="avatar" data-avatar="2" alt="Avatar 2">
+                        <img src="https://via.placeholder.com/150/FEE440/000000?text=3" class="avatar" data-avatar="3" alt="Avatar 3">
+                    </div>
+                    <input type="hidden" id="selectedAvatar" name="selectedAvatar">
+                </div>
+                
+                <button type="submit" class="submit-btn" id="submitProfile">Submit Profile</button>
+            </form>
+        </div>
+        
+        <div class="profile-card" id="profileCard">
+            <img id="profileAvatar" class="profile-avatar" src="" alt="Selected Avatar">
+            <h2 id="profileName">[Your UserName]</h2>
+            <p>Age: <span id="profileAge">[Your Age]</span></p>
+            <p>Study: <span id="profileStudy">[Your Study]</span></p>
+        </div>
+    </div>
+    
+    <div class="alert-popup" id="alertPopup">
+        <div class="alert-content">
+            <p>Please fill all required fields before submitting.</p>
+            <button class="alert-btn" id="alertOkBtn">OK</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const usernameInput = document.getElementById('username');
+            const ageInput = document.getElementById('age');
+            const ageError = document.getElementById('ageError');
+            const ageSuccess = document.getElementById('ageSuccess');
+            const studyLevelSelect = document.getElementById('studyLevel');
+            const avatars = document.querySelectorAll('.avatar');
+            const selectedAvatarInput = document.getElementById('selectedAvatar');
+            const profileForm = document.getElementById('profileForm');
+            const profileCard = document.getElementById('profileCard');
+            const profileName = document.getElementById('profileName');
+            const profileAge = document.getElementById('profileAge');
+            const profileStudy = document.getElementById('profileStudy');
+            const profileAvatar = document.getElementById('profileAvatar');
+            const alertPopup = document.getElementById('alertPopup');
+            const alertOkBtn = document.getElementById('alertOkBtn');
+            
+            // Initialize profile name with username value
+            profileName.textContent = usernameInput.value;
+            
+            // Age validation
+            ageInput.addEventListener('input', function() {
+                const ageValue = parseInt(this.value, 10);
+                
+                // Hide both messages initially
+                ageError.style.display = 'none';
+                ageSuccess.style.display = 'none';
+                
+                if (!this.value) {
+                    // Empty input, do nothing
+                    return;
+                }
+                
+                if (isNaN(ageValue) || ageValue < 18 || ageValue > 70) {
+                    ageError.style.display = 'block';
+                    return;
+                }
+                
+                // Valid age
+                ageSuccess.style.display = 'block';
+                
+                // Update profile card in real-time
+                profileAge.textContent = ageValue;
+            });
+            
+            // Study level selection
+            studyLevelSelect.addEventListener('change', function() {
+                // Update profile card in real-time
+                profileStudy.textContent = this.value;
+            });
+            
+            // Avatar selection
+            avatars.forEach(avatar => {
+                avatar.addEventListener('click', function() {
+                    // Remove selected class from all avatars
+                    avatars.forEach(a => a.classList.remove('selected'));
+                    
+                    // Add selected class to clicked avatar
+                    this.classList.add('selected');
+                    
+                    // Store selected avatar value
+                    const avatarValue = this.getAttribute('data-avatar');
+                    selectedAvatarInput.value = avatarValue;
+                    
+                    // Update profile card in real-time
+                    profileAvatar.src = this.src;
+                });
+            });
+            
+            // Form submission
+            profileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const age = ageInput.value;
+                const studyLevel = studyLevelSelect.value;
+                const avatar = selectedAvatarInput.value;
+                
+                // Validate form
+                if (!age || isNaN(parseInt(age, 10)) || parseInt(age, 10) < 18 || parseInt(age, 10) > 70 || !avatar) {
+                    alertPopup.style.display = 'block';
+                    return;
+                }
+                
+                // Show profile card
+                profileCard.style.display = 'block';
+            });
+            
+            // Close alert popup
+            alertOkBtn.addEventListener('click', function() {
+                alertPopup.style.display = 'none';
+            });
+            
+            // Real-time updates for profile card as user interacts with form
+            ageInput.addEventListener('input', updateProfileCard);
+            studyLevelSelect.addEventListener('change', updateProfileCard);
+            avatars.forEach(avatar => {
+                avatar.addEventListener('click', updateProfileCard);
+            });
+            
+            function updateProfileCard() {
+                const age = ageInput.value;
+                const studyLevel = studyLevelSelect.value;
+                
+                if (age && !isNaN(parseInt(age, 10)) && parseInt(age, 10) >= 18 && parseInt(age, 10) <= 70) {
+                    profileAge.textContent = age;
+                } else {
+                    profileAge.textContent = '[Your Age]';
+                }
+                
+                profileStudy.textContent = studyLevel;
+                
+                // Even though profile card is not visible until submission,
+                // we keep it updated for when it becomes visible
+            }
+            
+            // Set defaults for the profile card
+            profileStudy.textContent = studyLevelSelect.value;
+            
+            // BONUS: Update profile card when age or study level change without clicking submit
+            ageInput.addEventListener('change', function() {
+                const ageValue = parseInt(this.value, 10);
+                if (!isNaN(ageValue) && ageValue >= 18 && ageValue <= 70) {
+                    profileCard.style.display = 'block';
+                }
+            });
+            
+            studyLevelSelect.addEventListener('change', function() {
+                if (ageInput.value && !isNaN(parseInt(ageInput.value, 10)) && parseInt(ageInput.value, 10) >= 18 && parseInt(ageInput.value, 10) <= 70 && selectedAvatarInput.value) {
+                    profileCard.style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
+
+Scenario4----------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .profile-container {
+            background-color: #a8d1e7;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #7a5e00;
+            margin-bottom: 30px;
+        }
+
+        .form-section {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .student-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .student-info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .eligibility-feedback {
+            color: #4caf50;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .membership-options {
+            margin-top: 15px;
+        }
+
+        .radio-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .radio-group input {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .discount-text {
+            margin-left: 5px;
+            color: #4caf50;
+        }
+
+        .submit-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Profile Card Styles */
+        .profile-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-card h2 {
+            color: #7a5e00;
+            margin-bottom: 15px;
+        }
+
+        .profile-card p {
+            margin: 5px 0;
+        }
+
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 15px;
+            background-color: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        /* Customization Section */
+        .customization-section {
+            margin-top: 30px;
+        }
+
+        .customization-section h2 {
+            text-align: center;
+            color: #7a5e00;
+            margin-bottom: 15px;
+        }
+
+        .pattern-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .pattern-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .pattern-option.selected {
+            border: 2px solid #4CAF50;
+        }
+
+        .pattern-option:nth-child(1) {
+            background-color: #ffffff;
+        }
+
+        .pattern-option:nth-child(2) {
+            background-color: #f1f1f1;
+            background-image: radial-gradient(#ddd 2px, transparent 2px);
+            background-size: 10px 10px;
+        }
+
+        .pattern-option:nth-child(3) {
+            background-color: #f1f1f1;
+            background-image: linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd),
+                              linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd);
+            background-size: 10px 10px;
+            background-position: 0 0, 5px 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-container" id="profileContainer">
+            <h1>Create Your Profile</h1>
+            
+            <!-- Student Information Section -->
+            <div class="student-info">
+                <p><strong>Student Full Name</strong></p>
+                <p><strong>Student ID:</strong> w123457</p>
+                <p><strong>The course you study</strong></p>
+            </div>
+            
+            <!-- Form Section -->
+            <div class="form-section">
+                <h2>User Details</h2>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="userName">User Name:</label>
+                        <input type="text" id="userName" value="Oliver Brown" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" placeholder="Enter an age above 18">
+                        <p class="eligibility-feedback" id="ageEligibility">You are eligible for discount</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="studyStatus">Study status:</label>
+                        <select id="studyStatus">
+                            <option value="FT UG student">FT UG student</option>
+                            <option value="PT UG student">PT UG student</option>
+                            <option value="PG student">PG student</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subscription">Subscription:</label>
+                        <select id="subscription">
+                            <option value="Standard £9.99 per/month">Standard £9.99 per/month</option>
+                            <option value="Premium £14.99 per/month">Premium £14.99 per/month</option>
+                            <option value="Basic £4.99 per/month">Basic £4.99 per/month</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Annual membership discount:</label>
+                        <div class="membership-options">
+                            <div class="radio-group">
+                                <input type="radio" id="annualMembership" name="membership" value="annual">
+                                <label for="annualMembership">Annual membership apply</label>
+                                <span class="discount-text">20% Discount</span>
+                            </div>
+                            
+                            <div class="radio-group">
+                                <input type="radio" id="noDiscount" name="membership" value="none" checked>
+                                <label for="noDiscount">Without Discount</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submitProfile">Submit Profile</button>
+                </form>
+            </div>
+            
+            <!-- Profile Card (Hidden initially) -->
+            <div class="profile-card" id="profileCard" style="display: none;">
+                <h2>Your Profile</h2>
+                <div class="profile-image">
+                    <img src="https://picsum.photos/200" alt="Profile Image" id="profileImage">
+                </div>
+                <p><strong id="cardName">Oliver Brown</strong></p>
+                <p>Study: <span id="cardStudy">FT UG student</span></p>
+                <p>Subscription: <span id="cardSubscription">Standard £9.99 per/month</span></p>
+            </div>
+            
+            <!-- Customization Section -->
+            <div class="customization-section">
+                <h2>Customization</h2>
+                <p style="text-align: center; margin-bottom: 10px;">Change the Background Pattern</p>
+                <div class="pattern-options">
+                    <div class="pattern-option selected" data-pattern="solid"></div>
+                    <div class="pattern-option" data-pattern="dots"></div>
+                    <div class="pattern-option" data-pattern="grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const ageInput = document.getElementById('age');
+            const ageEligibility = document.getElementById('ageEligibility');
+            const profileForm = document.getElementById('profileForm');
+            const profileCard = document.getElementById('profileCard');
+            const cardName = document.getElementById('cardName');
+            const cardStudy = document.getElementById('cardStudy');
+            const cardSubscription = document.getElementById('cardSubscription');
+            const studyStatus = document.getElementById('studyStatus');
+            const subscription = document.getElementById('subscription');
+            const annualMembership = document.getElementById('annualMembership');
+            const profileContainer = document.getElementById('profileContainer');
+            const patternOptions = document.querySelectorAll('.pattern-option');
+            
+            // Check age eligibility for discount
+            ageInput.addEventListener('input', function() {
+                const age = parseInt(this.value);
+                if (age >= 18) {
+                    ageEligibility.style.display = 'block';
+                } else {
+                    ageEligibility.style.display = 'none';
+                }
+            });
+            
+            // Handle form submission
+            profileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Update the profile card with form values
+                cardStudy.textContent = studyStatus.value;
+                
+                // Calculate discount if annual membership is selected
+                let subscriptionText = subscription.value;
+                if (annualMembership.checked) {
+                    // Extract the price from the subscription string
+                    const priceMatch = subscriptionText.match(/£(\d+\.\d+)/);
+                    if (priceMatch && priceMatch[1]) {
+                        const originalPrice = parseFloat(priceMatch[1]);
+                        const discountedPrice = (originalPrice * 0.8).toFixed(2); // 20% discount
+                        
+                        // Replace the original price with the discounted price
+                        subscriptionText = subscriptionText.replace(
+                            `£${originalPrice}`, 
+                            `£${discountedPrice} (after 20% discount)`
+                        );
+                    }
+                }
+                
+                cardSubscription.textContent = subscriptionText;
+                
+                // Show the profile card
+                profileCard.style.display = 'block';
+                
+                // Scroll to see the profile card
+                setTimeout(() => {
+                    profileCard.scrollIntoView({ behavior: 'smooth' });
+                }, 300);
+            });
+            
+            // Handle pattern selection
+            patternOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    patternOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selected class to the clicked option
+                    this.classList.add('selected');
+                    
+                    // Apply pattern to the profile container
+                    const pattern = this.getAttribute('data-pattern');
+                    applyPattern(pattern);
+                });
+            });
+            
+            // Function to apply background pattern
+            function applyPattern(pattern) {
+                // Reset all patterns
+                profileContainer.style.backgroundImage = 'none';
+                profileContainer.style.backgroundColor = '#a8d1e7';
+                
+                // Apply selected pattern
+                switch(pattern) {
+                    case 'dots':
+                        profileContainer.style.backgroundImage = 'radial-gradient(#8bb5c9 2px, transparent 2px)';
+                        profileContainer.style.backgroundSize = '20px 20px';
+                        break;
+                    case 'grid':
+                        profileContainer.style.backgroundImage = 'linear-gradient(#8bb5c9 1px, transparent 1px), linear-gradient(90deg, #8bb5c9 1px, transparent 1px)';
+                        profileContainer.style.backgroundSize = '20px 20px';
+                        break;
+                    default:
+                        // Solid pattern (default)
+                        break;
                 }
             }
-            System.out.println();
-        }
-        System.out.println("=".repeat(76));
-        System.out.println("LEGEND: [O] = Seat available, [X] = Seat not available, | = Aisle");
-        System.out.println("=".repeat(76));
-        System.out.println();
-    }
+        });
+    </script>
+</body>
+</html>
 
-    // Task 5: Search for payments based on amount
-    private static void searchPayments() {
-        Scanner input = new Scanner(System.in);
-        boolean found = false;
-        System.out.print("Enter the amount to search: ");
-        int searchAmount = input.nextInt();
-        System.out.println("Emails for the given search amount: ");
-        for (int i = 0; i < payCount; i++) {
-            if (payments[i].getPaymentAmount() == searchAmount) {
-                payments[i].printPayment(); // Print payment details
-                found = true;
-            }
+Scenario5----------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
-        if (!found) {
-            System.out.println("Not found");
-        }
-    }
 
-    // Task 6: Save payments to a file
-    private static void saveToFile() {
-        try {
-            File file = new File("records.txt");
-            if (!file.exists()) {
-                file.createNewFile(); // Create file if it doesn't exist
-            }
-            FileWriter writer = new FileWriter("records.txt");
-            for (int i = 0; i < payCount; i++) {
-                writer.write(payments[i].getEmail() + ", " + payments[i].getPaymentAmount() + "\n");                
-            }
-            writer.close();
-            System.out.println("Payments successfully saved to records.txt");
-        } catch (Exception e) {
-            System.out.println("Error saving to the file.");
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
-    }
-}/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.mycompany.cosc005w_mock_planeapp;
 
-/**
- *
- * @author aayu0
- */
-public class Payment {
-    private String email;
-    private int paymentAmount;
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .profile-container {
+            background-color: #e8e0e0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .student-info {
+            text-align: center;
+            margin-bottom: 20px;
+            border: 2px solid #69b578;
+            border-radius: 20px;
+            padding: 10px;
+            max-width: 400px;
+            margin: 0 auto 20px;
+        }
+
+        .student-info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        .form-section h2 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        /* Human Verification Styles */
+        .verification {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .verification h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .math-challenge {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .math-challenge span {
+            margin: 0 5px;
+        }
+
+        .math-challenge input {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .verify-btn {
+            background-color: #4c72af;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .verify-btn:hover {
+            background-color: #3a5a8a;
+        }
+
+        .verification-message {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .verification-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .verification-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .submit-btn {
+            background-color: #69b578;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 20px;
+            display: none; /* Hidden initially */
+        }
+
+        .submit-btn:hover {
+            background-color: #539e62;
+        }
+
+        /* Profile Card Styles */
+        .profile-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none; /* Hidden initially */
+        }
+
+        .profile-details {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 20px;
+            background-color: #f1f1f1;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-info h3 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .profile-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        /* Dialog Styles */
+        .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            display: none;
+        }
+
+        .dialog {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .dialog p {
+            margin-bottom: 20px;
+        }
+
+        .dialog-buttons {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .dialog-btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+            border: none;
+            font-weight: bold;
+        }
+
+        .ok-btn {
+            background-color: #b88456;
+            color: white;
+        }
+
+        .cancel-btn {
+            background-color: #eee;
+            color: #333;
+        }
+
+        /* Customization Section */
+        .customization-section {
+            margin-top: 30px;
+        }
+
+        .customization-section h2 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .pattern-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .pattern-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .pattern-option.selected {
+            border: 2px solid #69b578;
+        }
+
+        .pattern-option:nth-child(1) {
+            background-color: #ffffff;
+        }
+
+        .pattern-option:nth-child(2) {
+            background-color: #f1f1f1;
+            background-image: radial-gradient(#ddd 2px, transparent 2px);
+            background-size: 10px 10px;
+        }
+
+        .pattern-option:nth-child(3) {
+            background-color: #f1f1f1;
+            background-image: linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd),
+                              linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd);
+            background-size: 10px 10px;
+            background-position: 0 0, 5px 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-container" id="profileContainer">
+            <h1>Create Your Profile</h1>
+            
+            <!-- Student Information Section -->
+            <div class="student-info">
+                <p><strong>Student Full Name</strong></p>
+                <p><strong>Student ID:</strong> w123457</p>
+                <p><strong>The course you study</strong></p>
+            </div>
+            
+            <!-- Form Section -->
+            <div class="form-section">
+                <h2>User Details</h2>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="userName">User Name:</label>
+                        <input type="text" id="userName" value="Tom Boyle" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="studyStatus">Study status:</label>
+                        <input type="text" id="studyStatus" value="FT UG student" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tuitionFees">Tuition fees:</label>
+                        <select id="tuitionFees">
+                            <option value="International tuition fee £17,000">International tuition fee £17,000</option>
+                            <option value="Home student fee £9,250">Home student fee £9,250</option>
+                            <option value="EU student fee £13,000">EU student fee £13,000</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Human Verification Section -->
+                    <div class="verification">
+                        <h3>Verify you are human</h3>
+                        <div id="mathChallenge" class="math-challenge">
+                            <span id="num1">5</span>
+                            <span>+</span>
+                            <span id="num2">3</span>
+                            <span>=</span>
+                            <input type="number" id="userAnswer" min="0">
+                        </div>
+                        <button type="button" id="verifyBtn" class="verify-btn">Click to Verify</button>
+                        <div id="verificationSuccess" class="verification-message verification-success">
+                            Correct! You may now submit your profile.
+                        </div>
+                        <div id="verificationError" class="verification-message verification-error">
+                            Incorrect. Try again.
+                        </div>
+                    </div>
+                    
+                    <button type="submit" id="submitProfile" class="submit-btn">Submit Profile</button>
+                </form>
+            </div>
+            
+            <!-- Profile Card (Hidden initially) -->
+            <div class="profile-card" id="profileCard">
+                <h2>Your Profile</h2>
+                <div class="profile-details">
+                    <div class="profile-image">
+                        <img src="https://picsum.photos/seed/profile/200" alt="Profile Image" id="profileImage">
+                    </div>
+                    <div class="profile-info">
+                        <h3 id="cardName">Tom Boyle</h3>
+                        <p>Study: <span id="cardStudy">FT UG student</span></p>
+                        <p>Tuition Fees: <span id="cardTuitionFees">International tuition fee £17,000</span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Customization Section -->
+            <div class="customization-section">
+                <h2>Customization</h2>
+                <p style="text-align: center; margin-bottom: 10px;">Change the Background Pattern</p>
+                <div class="pattern-options">
+                    <div class="pattern-option selected" data-pattern="solid"></div>
+                    <div class="pattern-option" data-pattern="dots"></div>
+                    <div class="pattern-option" data-pattern="grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
     
-    public Payment(String email, int paymentAmount){
-        this.email = email;
-        this.paymentAmount = paymentAmount;
-    }
+    <!-- Confirmation Dialog -->
+    <div class="dialog-overlay" id="confirmDialog">
+        <div class="dialog">
+            <p id="dialogText">This page says</p>
+            <div class="dialog-buttons">
+                <button class="dialog-btn cancel-btn" id="cancelBtn">Cancel</button>
+                <button class="dialog-btn ok-btn" id="okBtn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const profileForm = document.getElementById('profileForm');
+            const profileCard = document.getElementById('profileCard');
+            const cardName = document.getElementById('cardName');
+            const cardStudy = document.getElementById('cardStudy');
+            const cardTuitionFees = document.getElementById('cardTuitionFees');
+            const tuitionFees = document.getElementById('tuitionFees');
+            const profileContainer = document.getElementById('profileContainer');
+            const patternOptions = document.querySelectorAll('.pattern-option');
+            const verifyBtn = document.getElementById('verifyBtn');
+            const userAnswer = document.getElementById('userAnswer');
+            const verificationSuccess = document.getElementById('verificationSuccess');
+            const verificationError = document.getElementById('verificationError');
+            const submitBtn = document.getElementById('submitProfile');
+            const confirmDialog = document.getElementById('confirmDialog');
+            const dialogText = document.getElementById('dialogText');
+            const okBtn = document.getElementById('okBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            
+            // Generate random math challenge
+            let num1 = Math.floor(Math.random() * 10) + 1;
+            let num2 = Math.floor(Math.random() * 10) + 1;
+            document.getElementById('num1').textContent = num1;
+            document.getElementById('num2').textContent = num2;
+            
+            // Verify human check
+            verifyBtn.addEventListener('click', function() {
+                const correctAnswer = num1 + num2;
+                const userAnswerValue = parseInt(userAnswer.value);
+                
+                if (userAnswerValue === correctAnswer) {
+                    verificationSuccess.style.display = 'block';
+                    verificationError.style.display = 'none';
+                    submitBtn.style.display = 'block'; // Show submit button after successful verification
+                    
+                    // Show confirmation dialog
+                    showDialog("This page says", "Correct! You may now submit your profile.");
+                } else {
+                    verificationSuccess.style.display = 'none';
+                    verificationError.style.display = 'block';
+                    submitBtn.style.display = 'none'; // Hide submit button if verification fails
+                    
+                    // Show error dialog
+                    showDialog("This page says", "Incorrect. Try again.");
+                }
+            });
+            
+            // Handle form submission
+            profileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Update the profile card with form values
+                cardTuitionFees.textContent = tuitionFees.value;
+                
+                // Show the profile card
+                profileCard.style.display = 'block';
+                
+                // Scroll to see the profile card
+                setTimeout(() => {
+                    profileCard.scrollIntoView({ behavior: 'smooth' });
+                }, 300);
+            });
+            
+            // Handle pattern selection
+            patternOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    patternOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selected class to the clicked option
+                    this.classList.add('selected');
+                    
+                    // Apply pattern to the profile container
+                    const pattern = this.getAttribute('data-pattern');
+                    applyPattern(pattern);
+                });
+            });
+            
+            // Function to apply background pattern
+            function applyPattern(pattern) {
+                // Reset all patterns
+                profileContainer.style.backgroundImage = 'none';
+                profileContainer.style.backgroundColor = '#e8e0e0';
+                
+                // Apply selected pattern
+                switch(pattern) {
+                    case 'dots':
+                        profileContainer.style.backgroundImage = 'radial-gradient(#ccc 2px, transparent 2px)';
+                        profileContainer.style.backgroundSize = '20px 20px';
+                        break;
+                    case 'grid':
+                        profileContainer.style.backgroundImage = 'linear-gradient(#ccc 1px, transparent 1px), linear-gradient(90deg, #ccc 1px, transparent 1px)';
+                        profileContainer.style.backgroundSize = '20px 20px';
+                        break;
+                    default:
+                        // Solid pattern (default)
+                        break;
+                }
+            }
+            
+            // Dialog functions
+            function showDialog(title, message) {
+                dialogText.textContent = message;
+                confirmDialog.style.display = 'flex';
+            }
+            
+            okBtn.addEventListener('click', function() {
+                confirmDialog.style.display = 'none';
+            });
+            
+            cancelBtn.addEventListener('click', function() {
+                confirmDialog.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
+
+Scenario6------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .profile-container {
+            background-color: #e8e0e0;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .student-info {
+            text-align: center;
+            margin-bottom: 20px;
+            border: 2px solid #69b578;
+            border-radius: 20px;
+            padding: 10px;
+            max-width: 400px;
+            margin: 0 auto 20px;
+        }
+
+        .student-info p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        .form-section h2 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        /* Human Verification Styles */
+        .verification {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .verification h3 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .math-challenge {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .math-challenge span {
+            margin: 0 5px;
+        }
+
+        .math-challenge input {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .verify-btn {
+            background-color: #4c72af;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .verify-btn:hover {
+            background-color: #3a5a8a;
+        }
+
+        .submit-btn {
+            background-color: #69b578;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 20px;
+            display: none; /* Hidden initially */
+        }
+
+        .submit-btn:hover {
+            background-color: #539e62;
+        }
+
+        /* Profile Card Styles */
+        .profile-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none; /* Hidden initially */
+        }
+
+        .profile-details {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 20px;
+            background-color: #f1f1f1;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-info h3 {
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .profile-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        /* Dialog Styles */
+        .dialog-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            display: none;
+        }
+
+        .dialog {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .dialog p {
+            margin-bottom: 20px;
+        }
+
+        .dialog-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .dialog-buttons {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .dialog-btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+            border: none;
+            font-weight: bold;
+        }
+
+        .ok-btn {
+            background-color: #b88456;
+            color: white;
+        }
+
+        .cancel-btn {
+            background-color: #eee;
+            color: #333;
+        }
+
+        /* Customization Section */
+        .customization-section {
+            margin-top: 30px;
+        }
+
+        .customization-section h2 {
+            margin-bottom: 15px;
+            color: #333;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .pattern-options {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .pattern-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .pattern-option.selected {
+            border: 2px solid #69b578;
+        }
+
+        .pattern-option:nth-child(1) {
+            background-color: #ffffff;
+        }
+
+        .pattern-option:nth-child(2) {
+            background-color: #f1f1f1;
+            background-image: radial-gradient(#ddd 2px, transparent 2px);
+            background-size: 10px 10px;
+        }
+
+        .pattern-option:nth-child(3) {
+            background-color: #f1f1f1;
+            background-image: linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd),
+                              linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd);
+            background-size: 10px 10px;
+            background-position: 0 0, 5px 5px;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-container" id="profileContainer">
+            <h1>Create Your Profile</h1>
+            
+            <!-- Student Information Section -->
+            <div class="student-info">
+                <p><strong>Student Full Name</strong></p>
+                <p><strong>Student ID:</strong> w123457</p>
+                <p><strong>The course you study</strong></p>
+            </div>
+            
+            <!-- Form Section -->
+            <div class="form-section">
+                <h2>User Details</h2>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="userName">User Name:</label>
+                        <input type="text" id="userName" value="Sam Patel" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="studyStatus">Study status:</label>
+                        <input type="text" id="studyStatus" value="FT UG student" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subscription">Subscription:</label>
+                        <select id="subscription">
+                            <option value="Standard £9.99 per/month">Standard £9.99 per/month</option>
+                            <option value="Premium £14.99 per/month">Premium £14.99 per/month</option>
+                            <option value="Basic £4.99 per/month">Basic £4.99 per/month</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Human Verification Section -->
+                    <div class="verification">
+                        <h3>Verify you are human</h3>
+                        <button type="button" id="verifyBtn" class="verify-btn">Click to Verify</button>
+                    </div>
+                    
+                    <div class="success-message" id="successMessage"></div>
+                    
+                    <button type="submit" id="submitProfile" class="submit-btn">Submit Profile</button>
+                </form>
+            </div>
+            
+            <!-- Profile Card (Hidden initially) -->
+            <div class="profile-card" id="profileCard">
+                <h2>Your Profile</h2>
+                <div class="profile-details">
+                    <div class="profile-image">
+                        <img src="https://picsum.photos/seed/samprofile/200" alt="Profile Image" id="profileImage">
+                    </div>
+                    <div class="profile-info">
+                        <h3 id="cardName">Sam Patel</h3>
+                        <p>Study: <span id="cardStudy">FT UG student</span></p>
+                        <p>Subscription: <span id="cardSubscription">Standard £9.99 per/month</span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Customization Section -->
+            <div class="customization-section">
+                <h2>Customization</h2>
+                <p style="text-align: center; margin-bottom: 10px;">Change the Background Pattern</p>
+                <div class="pattern-options">
+                    <div class="pattern-option selected" data-pattern="solid"></div>
+                    <div class="pattern-option" data-pattern="dots"></div>
+                    <div class="pattern-option" data-pattern="grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
     
-    public String getEmail(){
-        return email;
-    }
-    public void setEmail(String email){
-        this.email =email;
-    }
+    <!-- Math Verification Dialog -->
+    <div class="dialog-overlay" id="mathDialog">
+        <div class="dialog">
+            <p>This page says</p>
+            <p>What is <span id="num1">5</span> + <span id="num2">3</span> = ?</p>
+            <input type="number" id="userAnswer" class="dialog-input" min="0">
+            <div class="dialog-buttons">
+                <button class="dialog-btn cancel-btn" id="cancelMathBtn">Cancel</button>
+                <button class="dialog-btn ok-btn" id="okMathBtn">OK</button>
+            </div>
+        </div>
+    </div>
     
-     public int getPaymentAmount(){
-        return paymentAmount;
-    }
-    public void setPaymentAmount(int paymentAmount){
-        this.paymentAmount = paymentAmount;
-    }
-    
-    public void printPayment(){
-        System.out.println(email+", "+ paymentAmount);
-    }
-}
+    <!-- Success Dialog -->
+    <div class="dialog-overlay" id="successDialog">
+        <div class="dialog">
+            <p>This page says</p>
+            <p id="successText">Correct! You may now submit your profile.</p>
+            <div class="dialog-buttons">
+                <button class="dialog-btn ok-btn" id="okSuccessBtn">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const profileForm = document.getElementById('profileForm');
+            const profileCard = document.getElementById('profileCard');
+            const cardName = document.getElementById('cardName');
+            const cardStudy = document.getElementById('cardStudy');
+            const cardSubscription = document.getElementById('cardSubscription');
+            const subscription = document.getElementById('subscription');
+            const profileContainer = document.getElementById('profileContainer');
+            const patternOptions = document.querySelectorAll('.pattern-option');
+            const verifyBtn = document.getElementById('verifyBtn');
+            const submitBtn = document.getElementById('submitProfile');
+            const successMessage = document.getElementById('successMessage');
+            
+            // Dialog elements
+            const mathDialog = document.getElementById('mathDialog');
+            const successDialog = document.getElementById('successDialog');
+            const userAnswer = document.getElementById('userAnswer');
+            const okMathBtn = document.getElementById('okMathBtn');
+            const cancelMathBtn = document.getElementById('cancelMathBtn');
+            const okSuccessBtn = document.getElementById('okSuccessBtn');
+            const successText = document.getElementById('successText');
+            
+            // Generate random math challenge
+            let num1 = Math.floor(Math.random() * 10) + 1;
+            let num2 = Math.floor(Math.random() * 10) + 1;
+            document.getElementById('num1').textContent = num1;
+            document.getElementById('num2').textContent = num2;
+            
+            // Open verification dialog
+            verifyBtn.addEventListener('click', function() {
+                mathDialog.style.display = 'flex';
+                userAnswer.focus();
+            });
+            
+            // Handle math verification
+            okMathBtn.addEventListener('click', function() {
+                const correctAnswer = num1 + num2;
+                const userAnswerValue = parseInt(userAnswer.value);
+                
+                mathDialog.style.display = 'none';
+                
+                if (userAnswerValue === correctAnswer) {
+                    // Show success dialog
+                    successDialog.style.display = 'flex';
+                    successText.textContent = "Correct! You may now submit your profile.";
+                    
+                    // Enable submit button
+                    submitBtn.style.display = 'block';
+                    successMessage.textContent = "Correct! You may now submit your profile.";
+                    successMessage.style.display = 'block';
+                } else {
+                    // Show error dialog
+                    successDialog.style.display = 'flex';
+                    successText.textContent = "Incorrect. Try again.";
+                }
+            });
+            
+            // Cancel button in math dialog
+            cancelMathBtn.addEventListener('click', function() {
+                mathDialog.style.display = 'none';
+            });
+            
+            // OK button in success dialog
+            okSuccessBtn.addEventListener('click', function() {
+                successDialog.style.display = 'none';
+            });
+            
+            // Handle form submission
+            profileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Update the profile card with form values
+                cardSubscription.textContent = subscription.value;
+                
+                // Show the profile card
+                profileCard.style.display = 'block';
+                
+                // Scroll to see the profile card
+                setTimeout(() => {
+                    profileCard.scrollIntoView({ behavior: 'smooth' });
+                }, 300);
+            });
+            
+            // Handle pattern selection
+            patternOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Remove selected class from all options
+                    patternOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selected class to the clicked option
+                    this.classList.add('selected');
+                    
+                    // Apply pattern to the profile container
+                    const pattern = this.getAttribute('data-pattern');
+                    applyPattern(pattern);
+                });
+            });
+            
+            // Function to apply background pattern
+            function applyPattern(pattern) {
+                // Reset all patterns
+                profileContainer.style.backgroundImage = 'none';
+                profileContainer.style.backgroundColor = '#e8e0e0';
+                
+                // Apply selected pattern
+                switch(pattern) {
+                    case 'dots':
+                        profileContainer.style.backgroundImage = 'radial-gradient(#ccc 2px, transparent 2px)';
+                        profileContainer.style.backgroundSize = '20px 20px';
+                        break;
+                    case 'grid':
+                        profileContainer.style.backgroundImage = 'linear-gradient(#ccc 1px, transparent 1px), linear-gradient(90deg, #ccc 1px, transparent 1px)';
+                        profileContainer.style.backgroundSize = '20px 20px';
+                        break;
+                    default:
+                        // Solid pattern (default)
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
+
+Scenario7---------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Profile</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: #e6e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .profile-info {
+            background-color: #f9f3f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .highlighted-info {
+            border: 2px solid #8bc34a;
+            border-radius: 25px;
+            padding: 10px;
+            margin-bottom: 15px;
+            background-color: #f9f9f9;
+        }
+
+        .user-details {
+            background-color: #fffef2;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .avatar-selection {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            opacity: 0.8;
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .avatar.selected {
+            transform: scale(1.1);
+            border: 3px solid #8bc34a;
+            opacity: 1;
+            box-shadow: 0 0 10px rgba(139, 195, 74, 0.5);
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #8bc34a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #7cb342;
+        }
+
+        .error-message {
+            color: #f44336;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .valid-indicator {
+            color: #4CAF50;
+            font-size: 14px;
+            margin-left: 5px;
+            display: none;
+        }
+
+        .alert-box {
+            position: relative;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #f44336;
+            border-radius: 4px;
+            background-color: #fff;
+            color: #333;
+            display: none;
+        }
+
+        .alert-box.show {
+            display: block;
+        }
+
+        .alert-icon {
+            color: #f44336;
+            margin-right: 10px;
+        }
+
+        .ok-btn {
+            background-color: #8bc34a;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+
+        /* Profile card styles */
+        .profile-card-container {
+            display: none;
+            margin-top: 20px;
+            background-color: #e6e0e0;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .profile-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            border: 2px solid #8bc34a;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+
+        .profile-details {
+            flex: 1;
+        }
+
+        .profile-details p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Create Your Profile</h1>
+        
+        <!-- Student Info Box -->
+        <div class="profile-info highlighted-info">
+            <p><strong>Student Full Name</strong></p>
+            <p><strong>Student ID:</strong> w1234567</p>
+            <p><strong>The course you study</strong></p>
+        </div>
+        
+        <!-- User Details Form -->
+        <div class="user-details">
+            <div class="form-group">
+                <label for="username">UserName:</label>
+                <input type="text" id="username" value="wminComp" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label for="age">Your Age:</label>
+                <input type="number" id="age" min="18" placeholder="Min value 18">
+                <span class="error-message" id="age-error">✗ Age must be between 18 and 70!</span>
+                <span class="valid-indicator" id="age-valid">✓ Valid Age</span>
+            </div>
+            
+            <div class="form-group">
+                <label for="level">The level you study:</label>
+                <select id="level">
+                    <option value="Foundation" selected>Foundation</option>
+                    <option value="Undergraduate">Undergraduate</option>
+                    <option value="Postgraduate">Postgraduate</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Select an Avatar:</label>
+                <div class="avatar-selection">
+                    <img src="https://cdn-icons-png.flaticon.com/512/219/219969.png" class="avatar" data-id="1" alt="Avatar 1">
+                    <img src="https://cdn-icons-png.flaticon.com/512/219/219983.png" class="avatar" data-id="2" alt="Avatar 2">
+                    <img src="https://cdn-icons-png.flaticon.com/512/219/219988.png" class="avatar" data-id="3" alt="Avatar 3">
+                </div>
+            </div>
+            
+            <button class="btn" id="submit-profile">Submit Profile</button>
+        </div>
+        
+        <!-- Alert Box -->
+        <div class="alert-box" id="alert-box">
+            <p><span class="alert-icon">⚠️</span> Please fill all required fields before submitting.</p>
+            <button class="ok-btn" id="ok-btn">OK</button>
+        </div>
+        
+        <!-- Profile Card (Shows after submission) -->
+        <div class="profile-card-container" id="profile-card-container">
+            <h2>Your Profile</h2>
+            <div class="profile-card">
+                <img src="" id="profile-avatar" class="profile-avatar" alt="Selected Avatar">
+                <div class="profile-details">
+                    <p><strong>UserName:</strong> <span id="profile-username">wminComp</span></p>
+                    <p><strong>Age:</strong> <span id="profile-age"></span></p>
+                    <p><strong>Study:</strong> <span id="profile-level"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const ageInput = document.getElementById('age');
+            const levelSelect = document.getElementById('level');
+            const avatars = document.querySelectorAll('.avatar');
+            const submitBtn = document.getElementById('submit-profile');
+            const alertBox = document.getElementById('alert-box');
+            const okBtn = document.getElementById('ok-btn');
+            const ageError = document.getElementById('age-error');
+            const ageValid = document.getElementById('age-valid');
+            const profileCardContainer = document.getElementById('profile-card-container');
+            
+            // Profile card elements
+            const profileAvatar = document.getElementById('profile-avatar');
+            const profileAge = document.getElementById('profile-age');
+            const profileLevel = document.getElementById('profile-level');
+            
+            // Variables
+            let selectedAvatar = null;
+            
+            // Functions
+            function validateAge(age) {
+                return age >= 18 && age <= 70;
+            }
+            
+            function updateProfileCard() {
+                if (selectedAvatar && validateAge(ageInput.value)) {
+                    profileAvatar.src = selectedAvatar.src;
+                    profileAge.textContent = ageInput.value;
+                    profileLevel.textContent = levelSelect.value;
+                    profileCardContainer.style.display = 'block';
+                }
+            }
+            
+            function checkFormValidity() {
+                return selectedAvatar && validateAge(ageInput.value);
+            }
+            
+            // Event Listeners
+            // Avatar selection
+            avatars.forEach(avatar => {
+                avatar.addEventListener('click', function() {
+                    // Remove selected class from all avatars
+                    avatars.forEach(a => a.classList.remove('selected'));
+                    
+                    // Add selected class to clicked avatar
+                    this.classList.add('selected');
+                    selectedAvatar = this;
+                    
+                    // If age is valid, automatically update profile card
+                    if (validateAge(ageInput.value)) {
+                        updateProfileCard();
+                    }
+                });
+            });
+            
+            // Age validation
+            ageInput.addEventListener('input', function() {
+                const age = parseInt(this.value);
+                
+                if (validateAge(age)) {
+                    ageError.style.display = 'none';
+                    ageValid.style.display = 'inline';
+                    
+                    // If avatar is selected, automatically update profile card
+                    if (selectedAvatar) {
+                        updateProfileCard();
+                    }
+                } else {
+                    ageError.style.display = 'inline';
+                    ageValid.style.display = 'none';
+                }
+            });
+            
+            // Level selection change
+            levelSelect.addEventListener('change', function() {
+                // If avatar is selected and age is valid, automatically update profile card
+                if (selectedAvatar && validateAge(ageInput.value)) {
+                    updateProfileCard();
+                }
+            });
+            
+            // Submit button
+            submitBtn.addEventListener('click', function() {
+                if (checkFormValidity()) {
+                    updateProfileCard();
+                } else {
+                    alertBox.style.display = 'block';
+                }
+            });
+            
+            // OK button in alert box
+            okBtn.addEventListener('click', function() {
+                alertBox.style.display = 'none';
+            });
+            
+            // Set Foundation as default
+            levelSelect.value = 'Foundation';
+        });
+    </script>
+</body>
+</html>
