@@ -1,3 +1,4 @@
+i have the exam and the base code and questions and every task is given in this pdf give me the answer code completing all the requirements provided. Please, each and every requirement should be met.
 Scenario1--------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------
 <!DOCTYPE html>
